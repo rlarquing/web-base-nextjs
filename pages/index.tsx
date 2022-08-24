@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import {parseCookies} from "../utilities";
 
 const Home: NextPage = () => {
   return (
@@ -68,5 +69,18 @@ const Home: NextPage = () => {
     </div>
   )
 }
+Home.getInitialProps = async ({ req, res }) => {
+  const data = parseCookies(req)
 
+  if (res) {
+    if (Object.keys(data).length === 0 && data.constructor === Object) {
+      res.writeHead(301, { Location: "/" })
+      res.end()
+    }
+  }
+
+  return {
+    data: data && data,
+  }
+}
 export default Home
