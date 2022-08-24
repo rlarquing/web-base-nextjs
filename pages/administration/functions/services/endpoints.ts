@@ -1,5 +1,5 @@
 export default {
-  funcion: {
+  function: {
     list: "funcion",
     new: "funcion",
     get: "funcion/{id}",
