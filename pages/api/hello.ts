@@ -1,13 +1,19 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-
+import {signIn} from "../auth/services/auth.service";
 type Data = {
-  name: string
+  data: string
 }
 
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
+export default async function handler(
+    req: NextApiRequest,
+    res: NextApiResponse
 ) {
-  res.status(200).json({ name: 'John Doe' })
+  const body = {
+    username: 'juan',
+    password: 'Qwerty1234*',
+  }
+  const respuesta = await signIn(body,'http://localhost:3000/api/');
+
+  res.status(200).json({data: respuesta})
 }

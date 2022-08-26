@@ -1,10 +1,8 @@
-export default {
-  function: {
+export const funcion = {
     list: "funcion",
     new: "funcion",
     get: "funcion/{id}",
     edit: "funcion/{id}",
     delete: "funcion/{id}",
     delete_many: "funcion/elementos/multiples",
-  }
 };

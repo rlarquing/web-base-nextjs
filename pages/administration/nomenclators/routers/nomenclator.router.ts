@@ -1,8 +1,6 @@
-export default {
-    nomenclators: {
-        index: "/nomenclators",
-        new: "/nomenclators/new",
-        show: "/nomenclators/show/[id]",
-        edit: "/nomenclators/edit/[id]",
-    }
-}
+export const nomenclators = {
+    index: "/nomenclators",
+    new: "/nomenclators/new",
+    show: "/nomenclators/show/[id]",
+    edit: "/nomenclators/edit/[id]",
+};

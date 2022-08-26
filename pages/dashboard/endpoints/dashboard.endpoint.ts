@@ -1,5 +1,3 @@
-export default {
-  dashboard: {
+export const dashboard = {
 
-  }
 };

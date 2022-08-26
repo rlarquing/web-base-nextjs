@@ -1,5 +1,4 @@
-export default {
-  nomenclador: {
+export const nomenclador = {
     list: "nomenclador/{name}/create/select",
     new: "nomenclador/{name}",
     get: "nomenclador/{name}/{id}",
@@ -10,7 +9,6 @@ export default {
     get_sublist: "nomenclador/{name}/elementos/multiples",
     edit_sublist: "nomenclador/{name}/elementos/multiples",
     delete_sublist: "nomenclador/{name}/elementos/multiples",
-    generic_entity: "{entity}/crear/select",
+    generic_entity: "nomenclador/{entity}/crear/select",
     select: "nomenclador",
-  },
 };

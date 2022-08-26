@@ -1,5 +1,3 @@
-export default {
-    auth: {
-        index: "/auth",
-    }
-}
+export const auth = {
+    index: "/auth",
+};

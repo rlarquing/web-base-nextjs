@@ -1,9 +1,8 @@
-import { InputError } from '../styled-components';
 import { InputBaseProps, TextField } from '@mui/material';
 import { FieldErrors, UseFormRegister, UseFormTrigger } from 'react-hook-form';
 
 const formValidation = (errors: FieldErrors, errorKey: string) => {
-  return errors[errorKey] ? <InputError className="error-message">{errors[errorKey]?.toString()}</InputError> : '';
+  return errors[errorKey] ? <div className="error-message">{errors[errorKey]?.toString()}</div> : '';
 };
 
 interface InputProps {

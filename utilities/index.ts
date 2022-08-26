@@ -16,3 +16,4 @@ export * from './patch-secure-axios.utility';
 export * from './post-secure-axios.utility';
 export * from './post-free-axios.utility';
 export * from './search-secure-axios.utility';
+export * from './api.utility';

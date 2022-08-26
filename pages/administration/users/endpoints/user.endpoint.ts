@@ -1,5 +1,4 @@
-export default {
-  user: {
+export const user = {
     list: "user",
     new: "user",
     get: "user/{id}",
@@ -9,5 +8,4 @@ export default {
     profile: "user/{id}",
     delete_many: "user/elementos/multiples",
     change_password: "user/{id}/change/password",
-  },
 };

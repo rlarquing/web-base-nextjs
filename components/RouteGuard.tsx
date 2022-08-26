@@ -4,7 +4,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 export const RouteGuard = () => {
   const userState = useSelector((state: AppStore) => state.user);
-  return userState.name ? <Outlet /> : <Navigate replace to={`login`} />;
+  return userState.name ? <Outlet /> : <Navigate replace to={`auth`} />;
 };
 
 export default RouteGuard;

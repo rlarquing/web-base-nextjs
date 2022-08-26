@@ -1,4 +1,4 @@
-export default {
+export const publicEnpoint = {
   menu: {
     list: "menu",
     new: "menu",

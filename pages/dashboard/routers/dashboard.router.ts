@@ -1,5 +1,3 @@
-export default {
-    dashboard: {
-        index: "/dashboard",
-    }
-}
+export const dashboard = {
+    index: "/dashboard",
+};
