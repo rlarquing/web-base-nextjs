@@ -1,12 +1,21 @@
 import axios from "axios";
+import {api} from "./api.utility";
 
-export const getSinAuth = async (endpoint: string) => {
+export const getSinAuth = async (req: any, res: any, endpoint: string, params?: any): Promise<any> => {
     let msg = {}; //MENSAJES
     let obj = {}; //OBJETOS
+    let message: string = "";
+    let response = null;
     try {
-        const response = await axios.get(endpoint);
+        if (params == undefined) {
+            response = await axios.get(api() + endpoint);
+        } else {
+            response = await axios.get(api() + endpoint, {
+                params: params
+            });
+        }
         if (response.status === 200) {
-            let { data } = response;
+            let {data} = response;
             obj = data;
         } else {
             msg = {
@@ -14,12 +23,11 @@ export const getSinAuth = async (endpoint: string) => {
                 message: `Error, no se ha podido completar su consulta.`,
             };
         }
-    } catch (error) {
-
-        msg = {
-            type: "error",
-            message: `Error, no se ha podido completar su consulta. ${error}`,
-        };
+    } catch (error: any) {
+        if (error.message.indexOf(" 400") !== -1 || error.message.indexOf(" 403") !== -1 || error.message.indexOf(" 500") !== -1) {
+            message = error.response.data.message;
+            msg = {statusCode: error.response.data.statusCode, type: "error", message};
+        }
     }
     return {msg, obj};
 };

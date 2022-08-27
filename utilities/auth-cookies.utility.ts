@@ -1,24 +1,20 @@
 import {serialize, parse} from 'cookie'
 
-const TOKEN_NAME = 'token'
-
-export const MAX_AGE = 60 * 60 * 8 // 8 hours
-
-export const setTokenCookie = (res: any, token: any): void => {
-    const cookie = serialize(TOKEN_NAME, token, {
-        maxAge: MAX_AGE,
-        expires: new Date(Date.now() + MAX_AGE * 1000),
+export const setCookie = (cookieName:string, res: any, dato: string): void => {
+    const cookie = serialize(cookieName, dato, {
+        maxAge: 3600,
+        expires: new Date(Date.now() + 3600 * 1000),
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: process.env.APP_ENV === 'production',
         path: '/',
-        sameSite: 'lax',
+        sameSite: 'strict',
     })
 
     res.setHeader('Set-Cookie', cookie)
 }
 
-export const removeTokenCookie = (res: any): void => {
-    const cookie = serialize(TOKEN_NAME, '', {
+export const removeCookie = (cookieName:string, res: any): void => {
+    const cookie = serialize(cookieName, '', {
         maxAge: -1,
         path: '/',
     })
@@ -35,7 +31,7 @@ export const parseCookies = (req: any): any => {
     return parse(cookie || '')
 }
 
-export const getTokenCookie = (req: any): string => {
+export const getObjCookie = (nameObj:string, req: any): string => {
     const cookies = parseCookies(req)
-    return cookies[TOKEN_NAME]
+    return cookies[nameObj]
 }

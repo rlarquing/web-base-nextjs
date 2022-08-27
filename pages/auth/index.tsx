@@ -1,13 +1,12 @@
 import {useCookies} from "react-cookie"
-import {signIn} from './services/auth.service';
 import {useState} from "react";
 import FormLogin from "../../components/FormLogin";
 import {Layout} from "../../components";
-import {api} from "../../utilities";
+import axios from "axios";
+import {auth} from "../api/auth/routers/auth.router";
 
-const Login = ({data}: any) => {
+const Login = () => {
     const [errorMsg, setErrorMsg] = useState('')
-    const [cookie, setCookie] = useCookies(["userLogged"])
 
     async function handleSubmit(e: any) {
         e.preventDefault()
@@ -19,16 +18,10 @@ const Login = ({data}: any) => {
             password: e.currentTarget.password.value,
         }
         try {
-            const response = await signIn(body, data);
-            console.log(response);
-            setCookie("userLogged", JSON.stringify(response), {
-                path: "/",
-                maxAge: 3600, // Expires after 1hr
-                sameSite: true,
-            })
+            const response=await axios.post(auth.signin,body);
+            setErrorMsg(response.data.message)
         } catch (error: any) {
-            console.error('An unexpected error happened occurred:', error)
-            setErrorMsg(error.message)
+            setErrorMsg(error.response.data.message);
         }
     }
 
@@ -48,13 +41,5 @@ const Login = ({data}: any) => {
       `}</style>
         </Layout>
     )
-}
-export const getServerSideProps = async () => {
-    const data: any = await api();
-    return {
-        props: {
-            data,
-        },
-    }
 }
 export default Login

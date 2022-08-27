@@ -1,42 +1,65 @@
 import axios from "axios";
-import cookie from "cookie"
+import {api} from "./api.utility";
+import {auth} from "../pages/api/auth/endpoints/auth.endpoint";
+import {setCookie, getObjCookie} from "./auth-cookies.utility";
 
-export const post = async (endpoint: string, bodyParams?: any) => {
+export const post = async (req: any, res: any, endpoint: string, bodyParams?: any): Promise<any> => {
     let msg: any = {}; //MENSAJES
+    let obj = {}; //OBJETOS
     let data: any = null;
-    let userDetails = cookie.parse("userLogged");
+    let userDetails = JSON.parse(getObjCookie('userLogged', req));
     if (userDetails !== undefined && userDetails !== null) {
         axios.defaults.headers.common["Authorization"] = "Bearer " + userDetails.token;
     }
     let message: string = "";
     try {
         if (bodyParams == undefined) {
-            data = await axios.post(endpoint);
+            data = await axios.post(api() + endpoint);
         } else {
-            data = await axios.post(endpoint, bodyParams);
+            data = await axios.post(api() + endpoint, bodyParams);
         }
         if (data.status === 200 || data.status === 201) {
-            if (data.data.successStatus === true) {
-                msg = {
-                    type: "info",
-                    message: `Elemento insertado correctamente.`,
-                };
+            if (data.data.hasOwnProperty("successStatus")) {
+                if (data.data.successStatus === true) {
+                    msg = {
+                        statusCode: data.status,
+                        type: "info",
+                        message: `Acción realizada correctamente.`,
+                    };
+                } else {
+                    msg = {
+                        statusCode: data.status,
+                        type: "error",
+                        message: data.data.message,
+                    };
+                }
             } else {
-                msg = {
-                    type: "error",
-                    message: data.data.message,
-                };
+                obj = data.data;
             }
+
         }
     } catch (error: any) {
         if (error.message.indexOf("Unauthorized")) {
-            message = `Usuario sin autorización.`;
-            msg = {type: "error", message};
+            if (userDetails !== undefined && userDetails !== null) {
+                const refresh: string = userDetails.refreshToken;
+                const respuesta = await axios.post(api() + auth.refresh, refresh);
+                const userLogged = {
+                    token: respuesta.data.accessToken,
+                    refreshToken: respuesta.data.refreshToken
+                }
+                const datos:string = JSON.stringify(userLogged);
+                setCookie('userLogged', res, datos);
+                if (bodyParams == undefined) {
+                    await post(req, res, endpoint);
+                } else {
+                    await post(req, res, endpoint, bodyParams);
+                }
+            }
         }
-        if (error.message.indexOf(" 400") !== -1 || error.message.indexOf(" 401") !== -1 || error.message.indexOf(" 500") !== -1) {
-            message = error.message;
-            msg = {type: "error", message};
+        if (error.message.indexOf(" 400") !== -1 || error.message.indexOf(" 403") !== -1 || error.message.indexOf(" 500") !== -1) {
+            message = error.response.data.message;
+            msg = {statusCode: error.response.data.statusCode, type: "error", message};
         }
     }
-    return {msg};
+    return {msg, obj};
 };
