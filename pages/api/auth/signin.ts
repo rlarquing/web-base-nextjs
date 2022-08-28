@@ -1,6 +1,5 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
 import {signIn} from "./services/auth.service";
-
 export default async function signin(
     req: NextApiRequest,
     res: NextApiResponse

@@ -5,7 +5,7 @@ import {Message} from "../../../../models";
 import {MessageAdapter} from "../../../../adapters";
 import {NextApiRequest, NextApiResponse} from "next";
 
-export const signIn = async (req: NextApiRequest, res: NextApiResponse, authCredentials: AuthCredentials): Promise<Message> => {
+export const signIn = async (req: NextApiRequest, res: NextApiResponse, authCredentials: AuthCredentials): Promise<any> => {
     const data: any = await postSinAuth(req, res, auth.login, authCredentials);
     if (data.msg.type === "error") {
         return MessageAdapter(data.msg);
@@ -16,7 +16,7 @@ export const signIn = async (req: NextApiRequest, res: NextApiResponse, authCred
     }
     const datos: string = JSON.stringify(userLogged);
     setCookie('userLogged', res, datos);
-    return {statusCode: 200, type: '', message: ''} as Message;
+    return {statusCode: 200, menu: data.obj.menus};
 }
 
 export const logOut = async (req: NextApiRequest, res: NextApiResponse): Promise<Message> => {
