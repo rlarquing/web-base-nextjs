@@ -12,8 +12,6 @@ const rootReducer = (state: any, action: any) => {
     switch (action.type) {
         case 'LOGIN':
             return {...state, user: action.payload};
-        case 'LOGOUT':
-            return {...state, user: inicialState};
         default:
             return state;
     }

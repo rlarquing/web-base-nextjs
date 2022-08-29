@@ -2,7 +2,6 @@ import Link from "next/link";
 import style from "../styles/Menu.module.css";
 import {dashboard} from '../pages/dashboard/routers/dashboard.router';
 import {auth} from '../pages/auth/routers/auth.router';
-import {auth as authApi} from '../pages/api/auth/routers/auth.router';
 
 export const Menu = ({userLogged}: any) => {
     return (
@@ -16,7 +15,7 @@ export const Menu = ({userLogged}: any) => {
                     <a className={style.link}>Administración</a>
                 </Link>
                 {userLogged ?
-                    <Link href={authApi.logout}>
+                    <Link href={auth.logout}>
                         <a className={style.link}>Salir</a>
                     </Link>
                     :
