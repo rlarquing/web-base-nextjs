@@ -26,7 +26,7 @@ const Provider = ({children}: any) => {
         user=JSON.parse(String(user));
         dispatch({
             type: 'LOGIN',
-            user: {username: 'hola', isAutenticated: true},
+            payload: user,
         });
 
     }, []);
