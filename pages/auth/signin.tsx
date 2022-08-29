@@ -7,9 +7,12 @@ import {db} from "../../localdb/db";
 import {AccionesMenu} from "../../localdb/menu";
 import {useRouter} from "next/router";
 
-const Login = () => {
-    const [errorMsg, setErrorMsg] = useState('')
+const Signin = () => {
+    const [errorMsg, setErrorMsg] = useState('');
+
     const router = useRouter();
+
+
     async function handleSubmit(e: any) {
         e.preventDefault()
         if (errorMsg) setErrorMsg('')
@@ -20,8 +23,8 @@ const Login = () => {
         }
         try {
             const response = await axios.post(auth.signin, body);
-             const menu: AccionesMenu = new AccionesMenu(db);
-             await menu.addAll(response.data.menu);
+            const menu: AccionesMenu = new AccionesMenu(db);
+            await menu.addAll(response.data.menu);
             await router.push('/');
         } catch (error: any) {
             setErrorMsg(error.response.data.message);
@@ -45,4 +48,4 @@ const Login = () => {
         </Layout>
     )
 }
-export default Login
+export default Signin

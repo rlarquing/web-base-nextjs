@@ -2,7 +2,7 @@ import Head from "next/head";
 import {Menu} from "./Menu";
 import style from "../styles/Layout.module.css";
 
-export const Layout=({children, title}: any) => {
+export const Layout = ({children, title, userLogged}: any) => {
     return (
         <div>
             <Head>
@@ -11,7 +11,7 @@ export const Layout=({children, title}: any) => {
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
 
-            <Menu/>
+            <Menu userLogged={userLogged}/>
 
             <div className={style.container}>{children}</div>
         </div>
