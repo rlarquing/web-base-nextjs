@@ -1,8 +1,17 @@
 import Head from "next/head";
 import {Menu} from "./Menu";
 import style from "../styles/Layout.module.css";
+import {useContext} from "react";
+import {Context} from "../contexts";
 
-export const Layout=({children, title}: any) => {
+export const Layout = ({children, title}: any) => {
+    const {state, dispatch} = useContext(Context);
+    let userLogged: boolean = false;
+    if (state.user){
+        userLogged=state.user.isAutenticated;
+        console.log(state.user);
+    }
+
     return (
         <div>
             <Head>
@@ -11,7 +20,7 @@ export const Layout=({children, title}: any) => {
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
 
-            <Menu/>
+            <Menu userLogged={userLogged}/>
 
             <div className={style.container}>{children}</div>
         </div>

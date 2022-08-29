@@ -1,4 +1,4 @@
-import {serialize, parse} from 'cookie'
+import {serialize, parse} from 'cookie';
 
 export const setCookie = (cookieName:string, res: any, dato: string): void => {
     const cookie = serialize(cookieName, dato, {

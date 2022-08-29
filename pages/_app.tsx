@@ -4,12 +4,11 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
-
+import {Provider} from '../contexts';
 function MyApp({Component, pageProps}: AppProps) {
     const router = useRouter();
     useEffect(() => {
         const handleStart = (url: string) => {
-            console.log(`Loading: ${url}`)
             NProgress.start()
         }
 
@@ -27,7 +26,7 @@ function MyApp({Component, pageProps}: AppProps) {
             router.events.off('routeChangeError', handleStop)
         }
     }, [router])
-    return (<Component {...pageProps} />);
+    return (<Provider><Component {...pageProps} /></Provider>);
 }
 
 export default MyApp
