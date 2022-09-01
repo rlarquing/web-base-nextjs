@@ -6,7 +6,7 @@ const inicialState = {
         isAutenticated: false
     },
 }
-const Context: any = createContext(null);
+const Context: any = createContext(inicialState);
 
 const rootReducer = (state: any, action: any) => {
     switch (action.type) {

@@ -15,8 +15,12 @@ export const setCookie = (cookieName:string, res: any, dato: string): void => {
 
 export const removeCookie = (cookieName:string, res: any): void => {
     const cookie = serialize(cookieName, '', {
-        maxAge: -1,
+        maxAge: 0,
+        expires: new Date(Date.now() + 3600 * 1000),
+        httpOnly: true,
+        secure: process.env.APP_ENV === 'production',
         path: '/',
+        sameSite: 'strict',
     })
 
     res.setHeader('Set-Cookie', cookie)

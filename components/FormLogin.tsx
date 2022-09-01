@@ -2,11 +2,11 @@ const FormLogin = ({ errorMessage, onSubmit }: any) => (
   <form onSubmit={onSubmit}>
     <label>
       <span>Usuario</span>
-      <input type="text" name="username" required  value={'juan'}/>
+      <input type="text" name="username" required  value='juan'/>
     </label>
     <label>
       <span>Contraseña</span>
-      <input type="password" name="password" required value={'Qwerty1234*'}/>
+      <input type="password" name="password" required value='Qwerty1234*'/>
     </label>
 
     <div className="submit">

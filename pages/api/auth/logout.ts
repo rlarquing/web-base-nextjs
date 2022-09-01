@@ -5,8 +5,6 @@ export default async function logout(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    await logOut(req, res);
-    res.writeHead(302, { Location: '/' });
-    res.end();
-
+    const respuesta=await logOut(req, res);
+    res.status(200).json(respuesta)
 }
