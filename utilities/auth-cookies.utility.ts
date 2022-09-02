@@ -2,7 +2,7 @@ import {serialize, parse} from 'cookie';
 
 export const setCookie = (cookieName:string, res: any, dato: string): void => {
     const cookie = serialize(cookieName, dato, {
-        maxAge: 3600,
+        maxAge: 4600,
         expires: new Date(Date.now() + 3600 * 1000),
         httpOnly: true,
         secure: process.env.APP_ENV === 'production',
