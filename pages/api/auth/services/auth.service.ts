@@ -14,8 +14,19 @@ export const signIn = async (req: NextApiRequest, res: NextApiResponse, authCred
         token: data.obj.accessToken,
         refreshToken: data.obj.refreshToken
     }
+    const menusDto: any[]=[];
+    for (const menu of data.obj.menus) {
+        menusDto.push({
+            to: menu.to,
+            tipo: menu.tipo
+        })
+    }
+    const menus: string = JSON.stringify(menusDto);
+    setCookie('menus', res, req, menus);
+
     const datos: string = JSON.stringify(userLogged);
-    setCookie('userLogged', res, datos);
+    setCookie('userLogged', res, req, datos);
+
     return {statusCode: 200, menu: data.obj.menus};
 }
 
