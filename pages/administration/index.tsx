@@ -1,9 +1,9 @@
-import {Layout} from "../../components";
+import {AdminLayout} from "../../components";
 
 export default function Index() {
     return (
-        <Layout>
+        <AdminLayout title={'Administración'}>
             <h1>Hello World!</h1>
-        </Layout>
+        </AdminLayout>
     )
 }
