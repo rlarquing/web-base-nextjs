@@ -1,6 +1,6 @@
 import {serialize, parse} from 'cookie';
 
-export const setCookie = (cookieName:string, res: any, dato: string): void => {
+export const setCookie = (cookieName: string, res: any, req: any, dato: string): void => {
     const cookie = serialize(cookieName, dato, {
         maxAge: 4600,
         expires: new Date(Date.now() + 3600 * 1000),
@@ -9,11 +9,12 @@ export const setCookie = (cookieName:string, res: any, dato: string): void => {
         path: '/',
         sameSite: 'strict',
     })
-
+    const cookies: any[] = req.cookies;
+    console.log(cookies)
     res.setHeader('Set-Cookie', cookie)
 }
 
-export const removeCookie = (cookieName:string, res: any): void => {
+export const removeCookie = (cookieName: string, res: any): void => {
     const cookie = serialize(cookieName, '', {
         maxAge: 0,
         expires: new Date(Date.now() + 3600 * 1000),
@@ -35,7 +36,7 @@ export const parseCookies = (req: any): any => {
     return parse(cookie || '')
 }
 
-export const getObjCookie = (nameObj:string, req: any): string => {
+export const getObjCookie = (nameObj: string, req: any): string => {
     const cookies = parseCookies(req)
     return cookies[nameObj]
 }
