@@ -1,42 +1,23 @@
-import {serialize, parse} from 'cookie';
-
-export const setCookie = (cookieName: string, res: any, req: any, dato: string): void => {
-    const cookie = serialize(cookieName, dato, {
+import {setCookie, deleteCookie, getCookie, CookieValueTypes} from 'cookies-next';
+const getOptions = (res: any, req: any): any => {
+    return {
+        req, res,
         maxAge: 4600,
         expires: new Date(Date.now() + 3600 * 1000),
         httpOnly: true,
         secure: process.env.APP_ENV === 'production',
         path: '/',
         sameSite: 'strict',
-    })
-    const cookies: any[] = req.cookies;
-    console.log(cookies)
-    res.setHeader('Set-Cookie', cookie)
+    }
+}
+export const addCookie = (cookieName: string,  dato: string, res: any, req: any): void => {
+    setCookie(cookieName, dato, getOptions(res,req));
 }
 
-export const removeCookie = (cookieName: string, res: any): void => {
-    const cookie = serialize(cookieName, '', {
-        maxAge: 0,
-        expires: new Date(Date.now() + 3600 * 1000),
-        httpOnly: true,
-        secure: process.env.APP_ENV === 'production',
-        path: '/',
-        sameSite: 'strict',
-    })
-
-    res.setHeader('Set-Cookie', cookie)
+export const removeCookie = (cookieName: string, res: any, req: any): void => {
+    deleteCookie(cookieName, { req, res });
 }
 
-export const parseCookies = (req: any): any => {
-    // For API Routes we don't need to parse the cookies.
-    if (req.cookies) return req.cookies
-
-    // For pages we do need to parse the cookies.
-    const cookie = req.headers?.cookie
-    return parse(cookie || '')
-}
-
-export const getObjCookie = (nameObj: string, req: any): string => {
-    const cookies = parseCookies(req)
-    return cookies[nameObj]
+export const getObjCookie = (nameObj: string, res: any, req: any): CookieValueTypes => {
+    return getCookie(nameObj, { req, res });
 }

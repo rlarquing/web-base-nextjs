@@ -1,6 +1,7 @@
 export const menus = {
-    index: "/menus",
-    new: "/menus/new",
-    show: "/menus/show/[id]",
-    edit: "/menus/edit/[id]",
+    index: "/api/menus",
+    new: "/api/menus/new",
+    show: "/api/menus/show/[id]",
+    edit: "/api/menus/edit/[id]",
+    tipoMenu: "/api/menus/tipo-menu",
 };

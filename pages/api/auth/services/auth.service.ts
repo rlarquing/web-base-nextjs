@@ -1,9 +1,10 @@
 import {AuthCredentials} from "../models";
 import {auth} from '../endpoints/auth.endpoint';
-import {postSinAuth, setCookie, removeCookie} from "../../../../utilities";
+import {postSinAuth, removeCookie, addCookie} from "../../../../utilities";
 import {Message} from "../../../../models";
 import {MessageAdapter} from "../../../../adapters";
 import {NextApiRequest, NextApiResponse} from "next";
+
 
 export const signIn = async (req: NextApiRequest, res: NextApiResponse, authCredentials: AuthCredentials): Promise<any> => {
     const data: any = await postSinAuth(req, res, auth.login, authCredentials);
@@ -22,16 +23,17 @@ export const signIn = async (req: NextApiRequest, res: NextApiResponse, authCred
         })
     }
     const menus: string = JSON.stringify(menusDto);
-    setCookie('menus', res, req, menus);
+    addCookie('menus', menus, res, req);
 
     const datos: string = JSON.stringify(userLogged);
-    setCookie('userLogged', res, req, datos);
+    addCookie('userLogged', datos, res,req);
 
     return {statusCode: 200, menu: data.obj.menus};
 }
 
 export const logOut = async (req: NextApiRequest, res: NextApiResponse): Promise<Message> => {
     const data = await postSinAuth(req, res, auth.logout);
-    removeCookie('userLogged', res);
+    removeCookie('userLogged', res, req);
+    removeCookie('menus', res, req);
     return MessageAdapter(data.msg);
 }

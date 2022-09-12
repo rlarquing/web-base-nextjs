@@ -5,4 +5,5 @@ export const menu = {
     edit: "menu/{id}",
     delete: "menu/{id}",
     delete_many: "menu/elementos/multiples",
+    tipo: "menu/tipo/{tipo}",
 };

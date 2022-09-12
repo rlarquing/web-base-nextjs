@@ -7,6 +7,8 @@ import axios from "axios";
 import {useRouter} from "next/router";
 import {useContext} from "react";
 import {Context} from "../contexts";
+import {AccionesMenu} from "../localdb/menu";
+import {db} from "../localdb/db";
 
 export const Menu = ({userLogged}: any) => {
     const {state, dispatch} = useContext(Context);
@@ -16,6 +18,8 @@ export const Menu = ({userLogged}: any) => {
         try {
             const response = await axios.post(authApi.logout);
             window.localStorage.removeItem('user')
+            const menu: AccionesMenu = new AccionesMenu(db);
+            await menu.deleteAll();
             const user: any = {username: '', isAutenticated: false};
             dispatch({
                 type: 'LOGIN',

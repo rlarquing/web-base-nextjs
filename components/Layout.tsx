@@ -7,7 +7,7 @@ import {Context} from "../contexts";
 export const Layout = ({children, title}: any) => {
     const {state, dispatch} = useContext(Context);
     let userLogged: boolean = false;
-        if (state.user){
+        if (state.user!==null){
             userLogged=state.user.isAutenticated;
         }
     return (
