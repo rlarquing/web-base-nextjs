@@ -10,7 +10,7 @@ import {Context} from "../../contexts";
 
 const Signin = () => {
     const [errorMsg, setErrorMsg] = useState('');
-    const {state, dispatch} = useContext(Context);
+    const {state, dispatch}: any = useContext(Context);
     const router = useRouter();
 
     async function handleSubmit(e: any) {
