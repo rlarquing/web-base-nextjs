@@ -23,15 +23,19 @@ const Signin = () => {
         }
         try {
             const response = await axios.post(auth.signin, body);
-            const menu: AccionesMenu = new AccionesMenu(db);
-            await menu.addAll(response.data.menu);
-            const user: any = {username: body.username, isAutenticated: true};
-            dispatch({
-                type: 'LOGIN',
-                payload: user
-            })
-            window.localStorage.setItem('user',JSON.stringify(user));
-            await router.push('/');
+            if (response.data.menu.length>0){
+                const menu: AccionesMenu = new AccionesMenu(db);
+                await menu.addAll(response.data.menu);
+                const user: any = {username: body.username, isAutenticated: true};
+                dispatch({
+                    type: 'LOGIN',
+                    payload: user
+                })
+                window.localStorage.setItem('user',JSON.stringify(user));
+                await router.push('/');
+            }else{
+                setErrorMsg('Usuario sin permisos asignados.');
+            }
         } catch (error: any) {
             setErrorMsg(error.response.data.message);
         }

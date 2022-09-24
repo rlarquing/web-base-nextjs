@@ -11,8 +11,10 @@ import {useEffect} from "react";
 const Home: NextPage = ({menus}: any) => {
 
     useEffect(() => {
-        const menu: AccionesMenu = new AccionesMenu(db);
-         menu.addAll(menus).finally();
+        if (menus.length>0){
+            const menu: AccionesMenu = new AccionesMenu(db);
+            menu.addAll(menus).finally();
+        }
     }, [])
     return (
         <Layout title="Home"></Layout>

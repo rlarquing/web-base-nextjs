@@ -22,11 +22,13 @@ export const signIn = async (req: NextApiRequest, res: NextApiResponse, authCred
             tipo: menu.tipo
         })
     }
-    const menus: string = JSON.stringify(menusDto);
-    addCookie('menus', menus, res, req);
+    if (data.obj.menus.length>0){
+        const menus: string = JSON.stringify(menusDto);
+        addCookie('menus', menus, res, req);
 
-    const datos: string = JSON.stringify(userLogged);
-    addCookie('userLogged', datos, res,req);
+        const datos: string = JSON.stringify(userLogged);
+        addCookie('userLogged', datos, res,req);
+    }
 
     return {statusCode: 200, menu: data.obj.menus};
 }
