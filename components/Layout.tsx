@@ -1,15 +1,15 @@
 import Head from "next/head";
 import {Menu} from "./Menu";
 import style from "../styles/Layout.module.css";
-import {useContext, useEffect} from "react";
+import {useContext} from "react";
 import {Context} from "../contexts";
 
 export const Layout = ({children, title}: any) => {
-    const {state, dispatch} = useContext(Context);
+    const {state, dispatch}: any = useContext(Context);
     let userLogged: boolean = false;
-        if (state.user!==null){
-            userLogged=state.user.isAutenticated;
-        }
+    if (state.user !== null) {
+        userLogged = state.user.isAutenticated;
+    }
     return (
         <div>
             <Head>
@@ -23,4 +23,8 @@ export const Layout = ({children, title}: any) => {
             <div className={style.container}>{children}</div>
         </div>
     );
+}
+
+Layout.defaultProps = {
+    title: 'Sin titulo'
 }

@@ -1,11 +1,10 @@
 import {NextResponse} from 'next/server';
 import {auth} from "./pages/auth/routers/auth.router";
-import {menus as menuApi} from "./pages/api/menus/routers/menu.router";
 
 export function middleware(request: any) {
     const userLogged = request.cookies.get('userLogged');
     const menus = request.cookies.get('menus');
-    if (request.nextUrl.pathname.includes(auth.signin) || request.nextUrl.pathname.includes(menuApi.tipoMenu)) {
+    if (request.nextUrl.pathname.includes(auth.signin)) {
         return NextResponse.next();
     }
     if (!request.nextUrl.pathname.includes('/_')) {

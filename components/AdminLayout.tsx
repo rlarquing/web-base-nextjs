@@ -227,3 +227,6 @@ export const AdminLayout = ({children, title}: any) => {
         </>
     );
 }
+AdminLayout.defaultProps = {
+    title: 'Sin titulo'
+}

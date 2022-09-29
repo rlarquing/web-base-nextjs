@@ -5,7 +5,7 @@
     icon: obj.icon,
     to: obj.to,
     menuPadre: obj.menuPadre,
-    menu: obj.menu,
+    menu: obj.menu === undefined ? null : obj.menu,
     menus: obj.menus,
     tipo: obj.tipo
 });

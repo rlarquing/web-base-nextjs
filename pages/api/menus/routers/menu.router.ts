@@ -3,5 +3,4 @@ export const menus = {
     new: "/api/menus/new",
     show: "/api/menus/show/[id]",
     edit: "/api/menus/edit/[id]",
-    tipoMenu: "/api/menus/tipo-menu",
 };
