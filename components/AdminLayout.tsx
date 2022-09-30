@@ -26,11 +26,11 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-import {tipoMenu} from "../pages/api/menus/services/menu.service";
 import {ReadMenu} from "../pages/api/menus/models/read-menu.model";
 import {AccionesMenu} from "../localdb/menu";
 import {db} from "../localdb/db";
-import {useContext, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
+import Link from 'next/link';
 
 const drawerWidth = 240;
 
@@ -146,8 +146,8 @@ export const AdminLayout = ({children, title}: any) => {
     useEffect(() => {
         const menu: AccionesMenu = new AccionesMenu(db);
         menu.getAll().then(res => {
-           const filtrado: ReadMenu[] = res.filter((item: any) => (item.tipo === 'administracion'));
-           setMenus(filtrado)
+            const filtrado: ReadMenu[] = res.filter((item: any) => (item.tipo === 'administracion'));
+            setMenus(filtrado)
         });
 
     }, []);
@@ -176,7 +176,9 @@ export const AdminLayout = ({children, title}: any) => {
                             <MenuIcon/>
                         </IconButton>
                         <Typography variant="h6" noWrap component="div">
-                            Panel de administración
+                            <Link href={'/administration'}>
+                                <a>Panel de administración</a>
+                            </Link>
                         </Typography>
                     </Toolbar>
                 </AppBar>
@@ -190,49 +192,26 @@ export const AdminLayout = ({children, title}: any) => {
                     <List>
                         {menus.map((text, index) => (
                             <ListItem key={text.id} disablePadding sx={{display: 'block'}}>
-                                <ListItemButton
-                                    sx={{
-                                        minHeight: 48,
-                                        justifyContent: open ? 'initial' : 'center',
-                                        px: 2.5,
-                                    }}
-                                >
-                                    <ListItemIcon
+                                <Link href={`${text.to}`}>
+                                    <ListItemButton
                                         sx={{
-                                            minWidth: 0,
-                                            mr: open ? 3 : 'auto',
-                                            justifyContent: 'center',
+                                            minHeight: 48,
+                                            justifyContent: open ? 'initial' : 'center',
+                                            px: 2.5,
                                         }}
                                     >
-                                        {index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}
-                                    </ListItemIcon>
-                                    <ListItemText primary={text.label} sx={{opacity: open ? 1 : 0}}/>
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
-                    </List>
-                    <Divider/>
-                    <List>
-                        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                            <ListItem key={text} disablePadding sx={{display: 'block'}}>
-                                <ListItemButton
-                                    sx={{
-                                        minHeight: 48,
-                                        justifyContent: open ? 'initial' : 'center',
-                                        px: 2.5,
-                                    }}
-                                >
-                                    <ListItemIcon
-                                        sx={{
-                                            minWidth: 0,
-                                            mr: open ? 3 : 'auto',
-                                            justifyContent: 'center',
-                                        }}
-                                    >
-                                        {index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}
-                                    </ListItemIcon>
-                                    <ListItemText primary={text} sx={{opacity: open ? 1 : 0}}/>
-                                </ListItemButton>
+                                        <ListItemIcon
+                                            sx={{
+                                                minWidth: 0,
+                                                mr: open ? 3 : 'auto',
+                                                justifyContent: 'center',
+                                            }}
+                                        >
+                                            {index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}
+                                        </ListItemIcon>
+                                        <ListItemText primary={text.label} sx={{opacity: open ? 1 : 0}}/>
+                                    </ListItemButton>
+                                </Link>
                             </ListItem>
                         ))}
                     </List>
