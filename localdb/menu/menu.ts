@@ -37,19 +37,10 @@ export class AccionesMenu {
         this.database.open().then(async () => {
             for (let element of data) {
                 let id = await this.database.menu.where({id: element.id}).first();
-                let men = {
-                    id: element.id,
-                    label: element.label,
-                    icon: element.icon,
-                    to: element.to,
-                    menus: element.menus,
-                    tipo: element.tipo,
-                    menuPadre: element.menuPadre
-                };
                 if (id === undefined) {
-                    this.database.menu.add(men);
+                    await this.add(element);
                 } else {
-                    this.database.menu.put(men);
+                    this.update(id, element)
                 }
             }
         }).catch((err: any) => {

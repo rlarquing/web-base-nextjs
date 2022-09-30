@@ -11,7 +11,7 @@ import {AccionesMenu} from "../localdb/menu";
 import {db} from "../localdb/db";
 
 export const Menu = ({userLogged}: any) => {
-    const {state, dispatch} = useContext(Context);
+    const {state, dispatch}: any = useContext(Context);
     const router = useRouter();
 
     async function logout() {

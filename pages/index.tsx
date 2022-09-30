@@ -31,7 +31,7 @@ export async function getStaticProps() {
             props: {
                 menus: respuesta as ReadMenu[]
             },
-        }
+        };
     }catch (e){
         console.log(e);
     }
