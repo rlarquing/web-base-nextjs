@@ -7,12 +7,14 @@ export const patch = async (req: any, res: any, endpoint: string, bodyParams: an
     let msg = {}; //MENSAJES
     const userLogged: string = getObjCookie('userLogged', res, req) as string;
     let userDetails = JSON.parse(userLogged);
-    if (userDetails !== undefined && userDetails !== null) {
-        axios.defaults.headers.common["Authorization"] = "Bearer " + userDetails.token;
-    }
     let message: string = "";
     try {
-        let data = await axios.patch(api() + endpoint, bodyParams);
+        let data = await axios.patch(api() + endpoint, bodyParams, {
+            headers:{
+                "Authorization" : `Bearer ${userDetails.token}`,
+                "Accept" : "application/json"
+            }
+        });
         if (data.status === 200 || data.status === 201) {
             if (data.data.successStatus === true) {
                 msg = {

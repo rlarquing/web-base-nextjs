@@ -18,6 +18,6 @@ export const removeCookie = (cookieName: string, res: any, req: any): void => {
     deleteCookie(cookieName, { req, res });
 }
 
-export const getObjCookie = (nameObj: string, res: any, req: any): CookieValueTypes => {
+export const getObjCookie = (nameObj: string, res?: any, req?: any): CookieValueTypes => {
     return getCookie(nameObj, { req, res });
 }

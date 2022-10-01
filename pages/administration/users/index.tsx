@@ -1,23 +1,16 @@
 import {AdminLayout, Listado} from "../../../components";
-import {tipoMenu} from "../../api/menus/services/menu.service";
-import {ReadMenu} from "../../api/menus/models/read-menu.model";
+import axios from "axios";
+import {users} from "../../api/users/routers/user.router";
+import {useEffect, useState} from "react";
 
-export default function Index({data}: any) {
+export default function Index() {
+    const [data,setData] = useState([]);
+    useEffect(() => {
+       axios.get(users.index).then(res => (setData(res.data)));
+    }, [])
     return (
         <AdminLayout title={'Listado de usuarios'}>
-            <Listado title={'Listado de los usuarios'}/>
+            <Listado title={'Listado de los usuarios'} data={data}/>
         </AdminLayout>
     )
-}
-export async function getStaticProps() {
-    try {
-
-        return {
-            props: {
-                data: []
-            },
-        };
-    }catch (e){
-        console.log(e);
-    }
 }

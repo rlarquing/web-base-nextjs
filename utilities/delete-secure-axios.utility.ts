@@ -8,16 +8,22 @@ export const remove = async (req: any, res: any, endpoint: string, payload?: any
     let data: any = null;
     const userLogged: string = getObjCookie('userLogged', res, req) as string;
     let userDetails = JSON.parse(userLogged);
-    if (userDetails !== undefined && userDetails !== null) {
-        axios.defaults.headers.common["Authorization"] = "Bearer " + userDetails.token;
-    }
     let message: string = "";
     try {
         if (payload === undefined) {
-            data = await axios.delete(api() + endpoint);
+            data = await axios.delete(api() + endpoint,{
+                headers:{
+                    "Authorization" : `Bearer ${userDetails.token}`,
+                    "Accept" : "application/json"
+                }
+            });
         } else {
             data = await axios.delete(api() + endpoint, {
                 data: payload,
+                headers:{
+                    "Authorization" : `Bearer ${userDetails.token}`,
+                    "Accept" : "application/json"
+                }
             });
         }
         if (data.status === 200 || data.status === 201) {

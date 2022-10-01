@@ -9,15 +9,22 @@ export const post = async (req: any, res: any, endpoint: string, bodyParams?: an
     let data: any = null;
     const userLogged: string = getObjCookie('userLogged', res, req) as string;
     let userDetails = JSON.parse(userLogged);
-    if (userDetails !== undefined && userDetails !== null) {
-        axios.defaults.headers.common["Authorization"] = "Bearer " + userDetails.token;
-    }
     let message: string = "";
     try {
         if (bodyParams == undefined) {
-            data = await axios.post(api() + endpoint);
+            data = await axios.post(api() + endpoint,null,{
+                headers:{
+                    "Authorization" : `Bearer ${userDetails.token}`,
+                    "Accept" : "application/json"
+                }
+            });
         } else {
-            data = await axios.post(api() + endpoint, bodyParams);
+            data = await axios.post(api() + endpoint, bodyParams, {
+                headers:{
+                    "Authorization" : `Bearer ${userDetails.token}`,
+                    "Accept" : "application/json"
+                }
+            });
         }
         if (data.status === 200 || data.status === 201) {
             if (data.data.hasOwnProperty("successStatus")) {

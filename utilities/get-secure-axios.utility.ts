@@ -9,16 +9,22 @@ export const get = async (req: any, res: any, endpoint: string, params?: any): P
     let response = null;
     const userLogged: string = getObjCookie('userLogged', res, req) as string;
     let userDetails = JSON.parse(userLogged);
-    if (userDetails !== undefined && userDetails !== null) {
-        axios.defaults.headers.common["Authorization"] = "Bearer " + userDetails.token;
-    }
     let message: string = "";
     try {
         if (params == undefined) {
-            response = await axios.get(api() + endpoint);
+            response = await axios.get(api() + endpoint, {
+                headers:{
+                    "Authorization" : `Bearer ${userDetails.token}`,
+                    "Accept" : "application/json"
+                }
+            });
         } else {
             response = await axios.get(api() + endpoint, {
-                params: params
+                params: params,
+                headers:{
+                    "Authorization" : `Bearer ${userDetails.token}`,
+                    "Accept" : "application/json"
+                }
             });
         }
         if (response.status === 200 || response.status === 201) {

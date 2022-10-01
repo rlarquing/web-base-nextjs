@@ -4,7 +4,7 @@ import {auth} from "./pages/auth/routers/auth.router";
 export function middleware(request: any) {
     const userLogged = request.cookies.get('userLogged');
     const menus = request.cookies.get('menus');
-    if (request.nextUrl.pathname.includes(auth.signin)) {
+    if (request.nextUrl.pathname.includes(auth.signin) || request.nextUrl.pathname.includes('/api/')) {
         return NextResponse.next();
     }
     if (!request.nextUrl.pathname.includes('/_')) {
