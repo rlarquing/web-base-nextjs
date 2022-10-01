@@ -1,11 +1,12 @@
 import axios from "axios";
 import {api} from "./api.utility";
 import {auth} from "../pages/api/auth/endpoints/auth.endpoint";
-import {getObjCookie, setCookie} from "./auth-cookies.utility";
+import {addCookie, getObjCookie} from "./auth-cookies.utility";
 
-export const edit = async (req: any, res: any, endpoint: string, bodyParams: any) => {
+export const patch = async (req: any, res: any, endpoint: string, bodyParams: any): Promise<any> => {
     let msg = {}; //MENSAJES
-    let userDetails = JSON.parse(getObjCookie('userLogged', req));
+    const userLogged: string = getObjCookie('userLogged', res, req) as string;
+    let userDetails = JSON.parse(userLogged);
     if (userDetails !== undefined && userDetails !== null) {
         axios.defaults.headers.common["Authorization"] = "Bearer " + userDetails.token;
     }
@@ -35,8 +36,8 @@ export const edit = async (req: any, res: any, endpoint: string, bodyParams: any
                     refreshToken: respuesta.data.refreshToken
                 }
                 const datos: string = JSON.stringify(userLogged);
-                setCookie('userLogged', res, datos);
-                await edit(req, res, endpoint, bodyParams);
+                addCookie('userLogged', datos, res, req);
+                await patch(req, res, endpoint, bodyParams);
             }
         }
         if (error.message.indexOf(" 400") !== -1 || error.message.indexOf(" 403") !== -1 || error.message.indexOf(" 500") !== -1) {

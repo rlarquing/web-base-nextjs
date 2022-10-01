@@ -1,12 +1,13 @@
 import axios from "axios";
-import {getObjCookie, setCookie} from "./auth-cookies.utility";
+import {addCookie, getObjCookie} from "./auth-cookies.utility";
 import {api} from "./api.utility";
 import {auth} from "../pages/api/auth/endpoints/auth.endpoint";
 
 export const remove = async (req: any, res: any, endpoint: string, payload?: any): Promise<any> => {
     let msg = {}; //MENSAJES
     let data: any = null;
-    let userDetails = JSON.parse(getObjCookie('userLogged', req));
+    const userLogged: string = getObjCookie('userLogged', res, req) as string;
+    let userDetails = JSON.parse(userLogged);
     if (userDetails !== undefined && userDetails !== null) {
         axios.defaults.headers.common["Authorization"] = "Bearer " + userDetails.token;
     }
@@ -42,7 +43,7 @@ export const remove = async (req: any, res: any, endpoint: string, payload?: any
                     refreshToken: respuesta.data.refreshToken
                 }
                 const datos: string = JSON.stringify(userLogged);
-                setCookie('userLogged', res, datos);
+                addCookie('userLogged', datos, res, req);
                 if (payload == undefined) {
                     await remove(req, res, endpoint);
                 } else {

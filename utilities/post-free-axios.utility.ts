@@ -1,7 +1,7 @@
 import axios from "axios";
 import {api} from "./api.utility";
 
-export const postSinAuth = async (req: any, res: any, endpoint: string, bodyParams?: any): Promise<any> => {
+export const postSinAuth = async (endpoint: string, bodyParams?: any): Promise<any> => {
     let msg = {}; //MENSAJES
     let obj = {}; //OBJETOS
     let response: any;

@@ -1,13 +1,14 @@
 import axios from "axios";
 import {api} from "./api.utility";
 import {auth} from "../pages/api/auth/endpoints/auth.endpoint";
-import {setCookie, getObjCookie} from "./auth-cookies.utility";
+import {addCookie, getObjCookie} from "./auth-cookies.utility";
 
 export const post = async (req: any, res: any, endpoint: string, bodyParams?: any): Promise<any> => {
     let msg: any = {}; //MENSAJES
     let obj = {}; //OBJETOS
     let data: any = null;
-    let userDetails = JSON.parse(getObjCookie('userLogged', req));
+    const userLogged: string = getObjCookie('userLogged', res, req) as string;
+    let userDetails = JSON.parse(userLogged);
     if (userDetails !== undefined && userDetails !== null) {
         axios.defaults.headers.common["Authorization"] = "Bearer " + userDetails.token;
     }
@@ -47,8 +48,8 @@ export const post = async (req: any, res: any, endpoint: string, bodyParams?: an
                     token: respuesta.data.accessToken,
                     refreshToken: respuesta.data.refreshToken
                 }
-                const datos:string = JSON.stringify(userLogged);
-                setCookie('userLogged', res, datos);
+                const datos: string = JSON.stringify(userLogged);
+                addCookie('userLogged', datos, res, req);
                 if (bodyParams == undefined) {
                     await post(req, res, endpoint);
                 } else {

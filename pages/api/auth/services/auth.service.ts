@@ -7,7 +7,7 @@ import {NextApiRequest, NextApiResponse} from "next";
 
 
 export const signIn = async (req: NextApiRequest, res: NextApiResponse, authCredentials: AuthCredentials): Promise<any> => {
-    const data: any = await postSinAuth(req, res, auth.login, authCredentials);
+    const data: any = await postSinAuth(auth.login, authCredentials);
     if (data.msg.type === "error") {
         return MessageAdapter(data.msg);
     }
@@ -34,7 +34,7 @@ export const signIn = async (req: NextApiRequest, res: NextApiResponse, authCred
 }
 
 export const logOut = async (req: NextApiRequest, res: NextApiResponse): Promise<Message> => {
-    const data = await postSinAuth(req, res, auth.logout);
+    const data = await postSinAuth(auth.logout);
     removeCookie('userLogged', res, req);
     removeCookie('menus', res, req);
     return MessageAdapter(data.msg);
