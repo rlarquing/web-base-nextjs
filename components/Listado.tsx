@@ -253,7 +253,7 @@ export const Listado = ({title, data}: any) => {
         rowCount = data.data.data.length;
         emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.data.data.length) : 0;
         let pos = 1;
-        let disablePadding: boolean = true;
+        let disablePadding: boolean = false;
         for (const key of data.key) {
             if (key !== 'id') {
                 headCells.push({
@@ -262,7 +262,6 @@ export const Listado = ({title, data}: any) => {
                     disablePadding,
                     label: data.header[pos],
                 });
-                disablePadding = false;
                 pos++
             }
         }
@@ -276,7 +275,7 @@ export const Listado = ({title, data}: any) => {
                      let aString: string[]=row[key].map((item: any)=>(item.dtoToString));
                      item[key]=aString.toString();
                  }else{
-                     item[key]='----';
+                     item[key]='';
                  }
                 }
 
@@ -333,7 +332,7 @@ export const Listado = ({title, data}: any) => {
                                                 />
                                             </TableCell>
                                             {headCells.map((key: any) => (
-                                                <TableCell align="right">{row[key.id]}</TableCell>))}
+                                                <TableCell>{row[key.id]}</TableCell>))}
                                         </TableRow>
                                     );
                                 })}
@@ -350,7 +349,7 @@ export const Listado = ({title, data}: any) => {
                     </Table>
                 </TableContainer>
                 <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
+                    rowsPerPageOptions={[5,10, 50, { value: -1, label: 'Todo' }]}
                     component="div"
                     count={rows.length}
                     rowsPerPage={rowsPerPage}
