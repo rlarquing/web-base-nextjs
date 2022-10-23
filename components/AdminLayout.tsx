@@ -24,13 +24,12 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import {ReadMenu} from "../pages/api/menus/models/read-menu.model";
 import {AccionesMenu} from "../localdb/menu";
 import {db} from "../localdb/db";
 import {useEffect, useState} from "react";
 import Link from 'next/link';
+import {Icon} from "@mui/material";
 
 const drawerWidth = 240;
 
@@ -207,7 +206,7 @@ export const AdminLayout = ({children, title}: any) => {
                                                 justifyContent: 'center',
                                             }}
                                         >
-                                            {index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}
+                                            <Icon>{text.icon}</Icon>
                                         </ListItemIcon>
                                         <ListItemText primary={text.label} sx={{opacity: open ? 1 : 0}}/>
                                     </ListItemButton>
