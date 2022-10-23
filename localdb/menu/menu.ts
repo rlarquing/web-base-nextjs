@@ -60,19 +60,6 @@ export class AccionesMenu {
         return await this.database.menu.toArray();
     };
 
-    public replace = (id: number, data: any) => {
-        let men = {
-            id: data.id,
-            label: data.label,
-            icon: data.icon,
-            to: data.to,
-            menus: data.menus,
-            tipo: data.tipo,
-            menuPadre: data.menuPadre
-        };
-        this.database.menu.where({id: id}).put(men);
-    };
-
     public delete = (id: number) => {
         this.database.where({id: id}).delete();
     };
@@ -85,16 +72,7 @@ export class AccionesMenu {
     };
 
     public update = (id: number, data: any) => {
-        let men = {
-            id: data.id,
-            label: data.label,
-            icon: data.icon,
-            to: data.to,
-            menus: data.menus,
-            tipo: data.tipo,
-            menuPadre: data.menuPadre
-        };
-        this.database.menu.where({id: id}).update(men);
+        this.database.menu.update(id,data);
     };
 }
 
