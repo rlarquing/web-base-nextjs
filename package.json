@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "description": "Web base para proyectos con nextjs",
+  "author": "Reynelbis Larquin Guerra",
   "scripts": {
     "dev": "dotenv next dev --port %PORT%",
     "build": "next build",
