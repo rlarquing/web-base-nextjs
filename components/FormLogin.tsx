@@ -1,16 +1,18 @@
+import {Button, TextField} from "@mui/material";
+
 const FormLogin = ({errorMessage, onSubmit}: any) => (
     <form onSubmit={onSubmit}>
         <label>
             <span>Usuario</span>
-            <input type="text" name="username" required defaultValue={'admin'}/>
+            <TextField type="text" name="username" required defaultValue={'admin'} variant="outlined"/>
         </label>
         <label>
             <span>Contraseña</span>
-            <input type="password" name="password" required defaultValue={'Qwerty1234*'}/>
+            <TextField type="password" name="password" required defaultValue={'Qwerty1234*'} variant="outlined"/>
         </label>
 
         <div className="submit">
-            <button type="submit">Entrar</button>
+            <Button type="submit">Entrar</Button>
         </div>
 
         {errorMessage && <p className="error">{errorMessage}</p>}

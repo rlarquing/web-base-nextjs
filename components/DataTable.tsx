@@ -3,22 +3,9 @@ import {
     DataGrid,
     GridColDef,
     esES,
-    GridSelectionModel,
-    useGridApiContext, GridToolbarContainer
 } from '@mui/x-data-grid';
 import {Paper, Box, Toolbar, Typography, createTheme, ThemeProvider} from "@mui/material";
-import Link from "next/link";
-import {useEffect, useState} from "react";
-import Button from "@mui/material/Button";
 
-// {
-//     field: 'fullName',
-//         headerName: 'Full name',
-//     description: 'This column has a value getter and is not sortable.',
-//     sortable: false,
-//     valueGetter: (params: GridValueGetterParams) =>
-//     `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-// },
 const theme = createTheme(
     {
         palette: {
@@ -31,11 +18,15 @@ const theme = createTheme(
 interface DataTableProps {
     title: string,
     data: any,
-    actions?: any
+    actions?: any,
+    toolBar?: any,
+    checkboxSelection?: boolean,
+    onSelectionModelChange?:any,
+    selectionModel?: any,
+    setSelectionModel?: any
 }
 
-export default function DataTable({title, data, actions}: DataTableProps) {
-    const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
+export default function DataTable({title, data, actions, checkboxSelection=true, toolBar=null, onSelectionModelChange=null, selectionModel, setSelectionModel}: DataTableProps) {
     const columns: GridColDef[] = [];
     let rows: any[] = [];
     for (let i = 0; i < data.key.length; i++) {
@@ -51,24 +42,6 @@ export default function DataTable({title, data, actions}: DataTableProps) {
     if (actions !== undefined) {
         columns.push(actions)
     }
-    const DataTableToolBar = () => {
-        const apiRef = useGridApiContext();
-
-        const borrarFilas = () => {
-            for (const fila of selectionModel) {
-                console.log(apiRef.current.getSelectedRows().get(fila));
-            }
-        }
-
-        return (
-            <GridToolbarContainer>
-                <Button onClick={borrarFilas}>Borrar</Button>
-                <Link href={"/"}>
-                    <a>Nuevo</a>
-                </Link>
-            </GridToolbarContainer>
-        );
-    };
 
     return (
         <Box sx={{width: '100%'}}>
@@ -93,13 +66,11 @@ export default function DataTable({title, data, actions}: DataTableProps) {
                                     rows={rows}
                                     columns={columns}
                                     pageSize={10}
-                                    rowsPerPageOptions={[10, 15]}
-                                    checkboxSelection
-                                    onSelectionModelChange={(newSelectionModel) => {
-                                        setSelectionModel(newSelectionModel)
-                                    }}
+                                    rowsPerPageOptions={[10, 15, 20, 50, 100]}
+                                    checkboxSelection={checkboxSelection}
+                                    onSelectionModelChange={onSelectionModelChange}
                                     components={{
-                                        Toolbar: DataTableToolBar,
+                                        Toolbar: toolBar,
                                     }}
                                 />
                             </ThemeProvider>

@@ -3,26 +3,53 @@ import DataTable from "../../../components/DataTable";
 import {findAll} from "../../api/users/services/user.service";
 import Link from "next/link";
 import {Button} from "@mui/material";
+import {GridSelectionModel, GridToolbarContainer, useGridApiContext} from "@mui/x-data-grid";
+import * as React from "react";
+import {useState} from "react";
 
 export default function Index({data}: any) {
+    const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
+    const onSelectionModelChange = (newSelectionModel: GridSelectionModel) => {
+        setSelectionModel(newSelectionModel)
+    }
+    const DataTableToolBar = () => {
+        const apiRef = useGridApiContext();
+
+        const borrarFilas = () => {
+            for (const fila of selectionModel) {
+                console.log(apiRef.current.getSelectedRows().get(fila));
+            }
+        }
+
+        return (
+            <GridToolbarContainer>
+                <Button onClick={borrarFilas}>Borrar</Button>
+                <Link href={"/"}>
+                    <a>Nuevo</a>
+                </Link>
+            </GridToolbarContainer>
+        );
+    };
     const actions: any = {
         field: 'actions',
         headerName: 'Acciones',
         flex: 1,
         renderCell: (params: any) => (
             <>
-                <Link href={"/"+params.row.id}>
-                    <Button key={"e"+params.row.id}>Editar</Button>
+                <Link href={"/" + params.row.id}>
+                    <Button key={"e" + params.row.id}>Editar</Button>
                 </Link>
-                <Link href={"/"+params.row.id}>
-                <Button key={"m"+params.row.id}>Mostrar</Button>
+                <Link href={"/" + params.row.id}>
+                    <Button key={"m" + params.row.id}>Mostrar</Button>
                 </Link>
             </>
         )
     };
     return (
         <AdminLayout title={'Listado de usuarios'}>
-            <DataTable title={'Listado de los usuarios'} data={data} actions={actions}/>
+            <DataTable title={'Listado de los usuarios'} data={data} actions={actions} toolBar={DataTableToolBar}
+                       onSelectionModelChange={onSelectionModelChange} selectionModel={selectionModel}
+                       setSelectionModel={setSelectionModel}/>
         </AdminLayout>
     )
 }
