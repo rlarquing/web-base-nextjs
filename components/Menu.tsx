@@ -34,18 +34,18 @@ export const Menu = ({userLogged}: any) => {
     return (
         <nav className={style.menu}>
             <div>
-                <Link href={dashboard.index}>
-                    <a className={style.link}>Dashboard</a>
+                <Link href={dashboard.index} className={style.link}>
+                    Dashboard
                 </Link>
 
-                <Link href="/administration">
-                    <a className={style.link}>Administración</a>
+                <Link href="/administration" className={style.link}>
+                    Administración
                 </Link>
                 {userLogged ?
                     <a className={style.link} href={`#auth/logout`} onClick={logout}>Salir</a>
                     :
-                    <Link href={auth.signin}>
-                        <a className={style.link}>Login</a>
+                    <Link href={auth.signin} className={style.link}>
+                        Login
                     </Link>
                 }
             </div>

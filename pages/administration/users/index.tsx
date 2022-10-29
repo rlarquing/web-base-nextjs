@@ -25,7 +25,7 @@ export default function Index({data}: any) {
             <GridToolbarContainer>
                 <Button onClick={borrarFilas}>Borrar</Button>
                 <Link href={"/"}>
-                    <a>Nuevo</a>
+                    Nuevo
                 </Link>
             </GridToolbarContainer>
         );
@@ -36,10 +36,10 @@ export default function Index({data}: any) {
         flex: 1,
         renderCell: (params: any) => (
             <>
-                <Link href={"/" + params.row.id}>
+                <Link href={"/" + params.row.id} legacyBehavior>
                     <Button key={"e" + params.row.id}>Editar</Button>
                 </Link>
-                <Link href={"/" + params.row.id}>
+                <Link href={"/" + params.row.id} legacyBehavior>
                     <Button key={"m" + params.row.id}>Mostrar</Button>
                 </Link>
             </>
