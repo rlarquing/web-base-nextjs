@@ -23,12 +23,13 @@ const Transition = forwardRef(function Transition(
 interface ConfirmationDialogProps {
     id: string,
     title: string,
-    content: string
+    content: string,
     handleOk: () => void,
+    disabled: boolean
 }
 
 export function ConfirmationDialog(props: ConfirmationDialogProps) {
-    let {handleOk, title, content, ...other} = props;
+    let {handleOk, title, content, disabled, ...other} = props;
     const [open, setOpen] = useState(false);
 
     const handleClick = () => {
@@ -44,7 +45,7 @@ export function ConfirmationDialog(props: ConfirmationDialogProps) {
     };
     return (
         <>
-            <IconButton  onClick={handleClick} color={"error"} aria-label="delete">
+            <IconButton onClick={handleClick} color={"error"} aria-label="delete" disabled={disabled}>
                 <DeleteIcon/>
             </IconButton>
             <Dialog
