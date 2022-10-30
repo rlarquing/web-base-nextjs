@@ -6,11 +6,11 @@ import {auth} from "../api/auth/routers/auth.router";
 import {db} from "../../localdb/db";
 import {AccionesMenu} from "../../localdb/menu";
 import {useRouter} from "next/router";
-import {Context} from "../../contexts";
+import {useUserContext} from "../../contexts";
 
 const Signin = () => {
     const [errorMsg, setErrorMsg] = useState('');
-    const {state, dispatch}: any = useContext(Context);
+    const {user, setUser}: any = useUserContext();
     const router = useRouter();
 
     async function handleSubmit(e: any) {
@@ -27,10 +27,7 @@ const Signin = () => {
                 const menu: AccionesMenu = new AccionesMenu(db);
                 await menu.addAll(response.data.menu);
                 const user: any = {username: body.username, isAutenticated: true};
-                dispatch({
-                    type: 'LOGIN',
-                    payload: user
-                })
+                setUser(user);
                 window.localStorage.setItem('user',JSON.stringify(user));
                 await router.push('/');
             }else{

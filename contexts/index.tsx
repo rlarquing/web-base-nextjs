@@ -1,36 +1,23 @@
-import {useReducer, createContext, useEffect} from 'react';
+import {useReducer, createContext, useEffect, useContext, useState} from 'react';
 
 const inicialState = {
-    user: {
         username: '',
         isAutenticated: false
-    },
-}
-const Context: any = createContext(inicialState);
-
-const rootReducer = (state: any, action: any) => {
-    switch (action.type) {
-        case 'LOGIN':
-            return {...state, user: action.payload};
-        default:
-            return state;
-    }
 };
+const UserContext: any = createContext(inicialState);
 
-const Provider = ({children}: any) => {
-    const [state, dispatch] = useReducer(rootReducer, inicialState)
+const UserProvider = ({children}: any) => {
+    const [user, setUser] = useState(inicialState)
     useEffect(() => {
-        let user = window.localStorage.getItem('user');
+        let user: any = window.localStorage.getItem('user');
         user=JSON.parse(String(user));
-        dispatch({
-            type: 'LOGIN',
-            payload: user,
-        });
-
+       setUser(user);
     }, []);
     return (
-        <Context.Provider value={{state, dispatch}}>{children}</Context.Provider>
+        <UserContext.Provider value={{user, setUser}}>{children}</UserContext.Provider>
     );
 }
-
-export {Context, Provider};
+const useUserContext=() => {
+    return useContext(UserContext);
+}
+export {useUserContext, UserProvider};

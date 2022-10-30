@@ -1,14 +1,13 @@
 import Head from "next/head";
 import {Menu} from "./Menu";
 import style from "../styles/Layout.module.css";
-import {useContext} from "react";
-import {Context} from "../contexts";
+import {useUserContext} from "../contexts";
 
 export const Layout = ({children, title}: any) => {
-    const {state, dispatch}: any = useContext(Context);
+    const {user, setUser}: any = useUserContext();
     let userLogged: boolean = false;
-    if (state.user !== null) {
-        userLogged = state.user.isAutenticated;
+    if (user !== null) {
+        userLogged = user.isAutenticated;
     }
     return (
         <div>

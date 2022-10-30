@@ -6,6 +6,7 @@ import {Button} from "@mui/material";
 import {GridSelectionModel, GridToolbarContainer, useGridApiContext} from "@mui/x-data-grid";
 import * as React from "react";
 import {useState} from "react";
+import {ConfirmationDialog} from "../../../components";
 
 export default function Index({data}: any) {
     const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
@@ -14,7 +15,6 @@ export default function Index({data}: any) {
     }
     const DataTableToolBar = () => {
         const apiRef = useGridApiContext();
-
         const borrarFilas = () => {
             for (const fila of selectionModel) {
                 console.log(apiRef.current.getSelectedRows().get(fila));
@@ -23,7 +23,9 @@ export default function Index({data}: any) {
 
         return (
             <GridToolbarContainer>
-                <Button onClick={borrarFilas}>Borrar</Button>
+                <ConfirmationDialog handleOk={borrarFilas} id={"confirmation"} title={"Alerta"}
+                                    content={"Esta seguro que quiere realizar esta acción"}/>
+
                 <Link href={"/"}>
                     Nuevo
                 </Link>

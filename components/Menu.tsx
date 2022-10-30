@@ -5,13 +5,12 @@ import {auth} from '../pages/auth/routers/auth.router';
 import {auth as authApi} from '../pages/api/auth/routers/auth.router';
 import axios from "axios";
 import {useRouter} from "next/router";
-import {useContext} from "react";
-import {Context} from "../contexts";
+import {useUserContext} from "../contexts";
 import {AccionesMenu} from "../localdb/menu";
 import {db} from "../localdb/db";
 
 export const Menu = ({userLogged}: any) => {
-    const {state, dispatch}: any = useContext(Context);
+    const {user, setUser}: any = useUserContext;
     const router = useRouter();
 
     async function logout() {
@@ -21,10 +20,7 @@ export const Menu = ({userLogged}: any) => {
             const menu: AccionesMenu = new AccionesMenu(db);
             await menu.deleteAll();
             const user: any = {username: '', isAutenticated: false};
-            dispatch({
-                type: 'LOGIN',
-                payload: user
-            })
+           setUser(user)
             await router.push('/');
         } catch (error) {
             console.log(error)
