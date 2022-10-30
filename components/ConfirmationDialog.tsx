@@ -1,9 +1,24 @@
-import {useState} from 'react';
-import Button from '@mui/material/Button';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import Dialog from '@mui/material/Dialog';
+import {useState, forwardRef, ReactElement, Ref} from 'react';
+import {
+    DialogContentText,
+    Button,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    Dialog,
+    Slide, IconButton
+} from "@mui/material";
+import {TransitionProps} from "@mui/material/transitions";
+import DeleteIcon from '@mui/icons-material/Delete';
+import * as React from "react";
+const Transition = forwardRef(function Transition(
+    props: TransitionProps & {
+        children: ReactElement<any, any>;
+    },
+    ref: Ref<unknown>,
+) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 
 interface ConfirmationDialogProps {
     id: string,
@@ -11,6 +26,7 @@ interface ConfirmationDialogProps {
     content: string
     handleOk: () => void,
 }
+
 export function ConfirmationDialog(props: ConfirmationDialogProps) {
     let {handleOk, title, content, ...other} = props;
     const [open, setOpen] = useState(false);
@@ -28,22 +44,29 @@ export function ConfirmationDialog(props: ConfirmationDialogProps) {
     };
     return (
         <>
-            <Button onClick={handleClick}>Borrar</Button>
+            <IconButton  onClick={handleClick} color={"error"} aria-label="delete">
+                <DeleteIcon/>
+            </IconButton>
             <Dialog
                 sx={{'& .MuiDialog-paper': {width: '100%', maxHeight: 435}}}
                 maxWidth="xs"
                 open={open}
+                TransitionComponent={Transition}
+                keepMounted
+                aria-describedby="alert-dialog-slide-description"
                 {...other}
             >
                 <DialogTitle>{title}</DialogTitle>
                 <DialogContent>
-                    <h4>{content}</h4>
+                    <DialogContentText id="alert-dialog-slide-description">
+                        {content}
+                    </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={handleCancel}  variant="contained" color="warning">
+                    <Button autoFocus onClick={handleCancel} variant="outlined" color="error">
                         Cancelar
                     </Button>
-                    <Button onClick={handleAcept}  variant="contained" color="primary">Aceptar</Button>
+                    <Button onClick={handleAcept} variant="contained" color="primary">Aceptar</Button>
                 </DialogActions>
             </Dialog>
         </>
