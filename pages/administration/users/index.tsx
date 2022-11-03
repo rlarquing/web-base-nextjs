@@ -25,8 +25,8 @@ export default function Index({data}: any) {
             }
         }
 
-        const buscar = ()=>{
-            console.log('hola');
+        const buscar = (value:string)=>{
+            console.log(value);
         }
 
         useEffect(()=>{
