@@ -1,5 +1,4 @@
-import {AdminLayout} from "../../../components";
-import DataTable from "../../../components/DataTable";
+import {AdminLayout, DataTable, SearchInput} from "../../../components";
 import {findAll} from "../../api/users/services/user.service";
 import Link from "next/link";
 import {Button, IconButton, Stack} from "@mui/material";
@@ -26,6 +25,10 @@ export default function Index({data}: any) {
             }
         }
 
+        const buscar = ()=>{
+            console.log('hola');
+        }
+
         useEffect(()=>{
             if (selectionModel.length>0){
                 setDisabled(false);
@@ -45,6 +48,7 @@ export default function Index({data}: any) {
                             <AddCircleIcon />
                         </IconButton>
                     </Link>
+                    <SearchInput id={'buscar'} placeholder={'Buscar'} buscar={buscar}/>
                 </Stack>
             </GridToolbarContainer>
         );

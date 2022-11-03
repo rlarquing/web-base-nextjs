@@ -26,7 +26,7 @@ interface DataTableProps {
     setSelectionModel?: any
 }
 
-export default function DataTable({title, data, actions, checkboxSelection=true, toolBar=null, onSelectionModelChange=null, selectionModel, setSelectionModel}: DataTableProps) {
+export function DataTable({title, data, actions, checkboxSelection=true, toolBar=null, onSelectionModelChange=null, selectionModel, setSelectionModel}: DataTableProps) {
     const columns: GridColDef[] = [];
     let rows: any[] = [];
     for (let i = 0; i < data.key.length; i++) {
