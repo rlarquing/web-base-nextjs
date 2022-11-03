@@ -29,7 +29,12 @@ import {AccionesMenu} from "../localdb/menu";
 import {db} from "../localdb/db";
 import {useEffect, useState} from "react";
 import Link from 'next/link';
-import {Icon} from "@mui/material";
+import {Collapse, Icon} from "@mui/material";
+import {ExpandLess, ExpandMore, StarBorder } from "@mui/icons-material";
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import DraftsIcon from '@mui/icons-material/Drafts';
+import SendIcon from '@mui/icons-material/Send';
+
 
 const drawerWidth = 240;
 
@@ -131,9 +136,13 @@ export const AdminLayout = ({children, title}: any) => {
 
     const theme = useTheme();
     const [open, setOpen] = React.useState(true);
+    const [openS, setOpenS] = React.useState(false);
 
+    const handleClick = () => {
+        setOpenS(!openS);
+    };
     const handleDrawerOpen = () => {
-        setOpen(true);
+        setOpenS(true);
     };
 
     const handleDrawerClose = () => {
@@ -212,6 +221,22 @@ export const AdminLayout = ({children, title}: any) => {
                             </Link>
                         </ListItem>
                     ))}
+
+                    <ListItemButton onClick={handleClick}>
+                        <ListItemText primary="Seguridad" />
+                        {openS ? <ExpandLess /> : <ExpandMore />}
+                    </ListItemButton>
+                    <Collapse in={openS} timeout="auto" unmountOnExit>
+                        <List component="div" disablePadding>
+                            <ListItemButton sx={{ pl: 4 }}>
+                                <ListItemIcon>
+                                    <StarBorder />
+                                </ListItemIcon>
+                                <ListItemText primary="Starred" />
+                            </ListItemButton>
+                        </List>
+                    </Collapse >
+
                 </List>
             </Drawer>
             <Box component="main" sx={{flexGrow: 1, p: 3}}>

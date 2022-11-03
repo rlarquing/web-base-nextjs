@@ -4,8 +4,8 @@ import {auth} from '../pages/auth/routers/auth.router';
 import {auth as authApi} from '../pages/api/auth/routers/auth.router';
 import axios from "axios";
 import {useRouter} from "next/router";
-import React, {useContext, useState} from "react";
-import {Context} from "../contexts";
+import React, {useState} from "react";
+import {useUserContext} from "../contexts";
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -18,7 +18,7 @@ import {dashboard} from "../pages/dashboard/routers/dashboard.router";
 
 export const AdminMenu = ({userLogged}: any) => {
     const [selectedIndex, setSelectedIndex] = useState(1);
-    const {state, dispatch} = useContext(Context);
+    const {user, setUser} = useUserContext();
     const router = useRouter();
     const handleListItemClick = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -32,10 +32,7 @@ export const AdminMenu = ({userLogged}: any) => {
             const response = await axios.post(authApi.logout);
             window.localStorage.removeItem('user')
             const user: any = {username: '', isAutenticated: false};
-            dispatch({
-                type: 'LOGIN',
-                payload: user
-            })
+            setUser(user)
             await router.push('/');
         } catch (error) {
             console.log(error)

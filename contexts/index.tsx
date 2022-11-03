@@ -1,4 +1,4 @@
-import {useReducer, createContext, useEffect, useContext, useState} from 'react';
+import {createContext, useEffect, useContext, useState} from 'react';
 
 const inicialState = {
         username: '',
@@ -17,7 +17,7 @@ const UserProvider = ({children}: any) => {
         <UserContext.Provider value={{user, setUser}}>{children}</UserContext.Provider>
     );
 }
-const useUserContext=() => {
+const useUserContext=(): any => {
     return useContext(UserContext);
 }
 export {useUserContext, UserProvider};
