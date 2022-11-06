@@ -12,3 +12,4 @@ export * from './delete-secure-axios.utility';
 export * from './get-free-axios.utility';
 export * from './post-free-axios.utility';
 export * from './api.utility';
+export * from './groupBy.utility';

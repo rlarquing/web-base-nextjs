@@ -30,10 +30,12 @@ import {db} from "../localdb/db";
 import {useEffect, useState} from "react";
 import Link from 'next/link';
 import {Collapse, Icon} from "@mui/material";
-import {ExpandLess, ExpandMore, StarBorder } from "@mui/icons-material";
+import {ExpandLess, ExpandMore, StarBorder} from "@mui/icons-material";
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import DraftsIcon from '@mui/icons-material/Drafts';
 import SendIcon from '@mui/icons-material/Send';
+import {SubMenu} from "./SubMenu";
+import {groupBy} from "../utilities";
 
 
 const drawerWidth = 240;
@@ -136,28 +138,32 @@ export const AdminLayout = ({children, title}: any) => {
 
     const theme = useTheme();
     const [open, setOpen] = React.useState(true);
-    const [openS, setOpenS] = React.useState(false);
 
-    const handleClick = () => {
-        setOpenS(!openS);
-    };
     const handleDrawerOpen = () => {
-        setOpenS(true);
+        setOpen(true);
     };
 
     const handleDrawerClose = () => {
         setOpen(false);
     };
 
-    const [menus, setMenus] = useState([{} as ReadMenu]);
+    const [menus, setMenus] = useState(new Map());
+    const [keys, setKeys] = useState([""]);
 
     useEffect(() => {
         const menu: AccionesMenu = new AccionesMenu(db);
         menu.getAll().then(res => {
             const filtrado: ReadMenu[] = res.filter((item: any) => (item.tipo === 'administracion'));
-            setMenus(filtrado)
+            const agrupado: any = groupBy(filtrado, (item: ReadMenu) => item.menuPadre);
+            setMenus(agrupado);
+            const llaves = agrupado.keys();
+            const keysM: string[] = [];
+            for (let i = 0; i < agrupado.size; i++) {
+                const key = llaves.next().value;
+                keysM.push(key);
+            }
+            setKeys(keysM);
         });
-
     }, []);
 
     return <>
@@ -196,48 +202,17 @@ export const AdminLayout = ({children, title}: any) => {
                     </IconButton>
                 </DrawerHeader>
                 <Divider/>
+                { menus.size>0 ?
                 <List>
-                    {menus.map((text, index) => (
-                        <ListItem key={text.id} disablePadding sx={{display: 'block'}}>
-                            <Link href={`${text.to}`} legacyBehavior>
-                                <ListItemButton
-                                    sx={{
-                                        minHeight: 48,
-                                        justifyContent: open ? 'initial' : 'center',
-                                        px: 2.5,
-                                    }}
-                                >
-                                    <ListItemIcon
-                                        sx={{
-                                            minWidth: 0,
-                                            mr: open ? 3 : 'auto',
-                                            justifyContent: 'center',
-                                        }}
-                                    >
-                                        <Icon>{text.icon}</Icon>
-                                    </ListItemIcon>
-                                    <ListItemText primary={text.label} sx={{opacity: open ? 1 : 0}}/>
-                                </ListItemButton>
-                            </Link>
-                        </ListItem>
-                    ))}
-
-                    <ListItemButton onClick={handleClick}>
-                        <ListItemText primary="Seguridad" />
-                        {openS ? <ExpandLess /> : <ExpandMore />}
-                    </ListItemButton>
-                    <Collapse in={openS} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-                            <ListItemButton sx={{ pl: 4 }}>
-                                <ListItemIcon>
-                                    <StarBorder />
-                                </ListItemIcon>
-                                <ListItemText primary="Starred" />
-                            </ListItemButton>
-                        </List>
-                    </Collapse >
-
+                    {keys.map((key, index) => (
+                            key === ''
+                                ?
+                                <SubMenu menus={menus.get(key)}/>
+                                :
+                             <SubMenu nombre={key} menus={menus.get(key)}/>
+                        ))}
                 </List>
+               :<></> }
             </Drawer>
             <Box component="main" sx={{flexGrow: 1, p: 3}}>
                 <DrawerHeader/>

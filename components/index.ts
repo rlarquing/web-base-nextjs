@@ -6,3 +6,4 @@ export {AdminMenu} from './AdminMenu';
 export {Listado} from './Listado';
 export {DataTable} from './DataTable';
 export {SearchInput} from './SearchInput';
+export {SubMenu} from './SubMenu';
