@@ -5,4 +5,6 @@ export const rol = {
     edit: "rol/{id}",
     delete: "rol/{id}",
     delete_many: "rol/elementos/multiples",
+    search: "rol/buscar",
+    select: "rol/crear/select",
 };

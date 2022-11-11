@@ -2,7 +2,7 @@ import {get, patch, post, remove} from "../../../../utilities";
 import {user} from "../endpoints/user.endpoint";
 import {NextApiRequest, NextApiResponse} from "next";
 import {Listado, Message, Response} from "../../../../models";
-import {ListadoAdapter} from "../../../../adapters/listado.adapter";
+import {ListadoAdapter} from "../../../../adapters";
 import {ReadUser} from "../models/read-user.model";
 import {UserAdapter} from "../adapters/user.adapter";
 import {MessageAdapter, ResponseAdapter} from "../../../../adapters";

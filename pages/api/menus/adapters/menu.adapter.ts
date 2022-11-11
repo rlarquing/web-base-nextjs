@@ -1,4 +1,6 @@
- const ReadMenuAdapter = (obj: any) => ({
+import {ReadMenu} from "../models/read-menu.model";
+
+export const MenuAdapter = (obj: any): ReadMenu => ({
     dtoToString: obj.dtoToString,
     id: obj.id,
     label: obj.label,
@@ -9,5 +11,3 @@
     menus: obj.menus,
     tipo: obj.tipo
 });
-
-export default ReadMenuAdapter;

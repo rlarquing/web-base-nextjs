@@ -5,4 +5,6 @@ export const funcion = {
     edit: "funcion/{id}",
     delete: "funcion/{id}",
     delete_many: "funcion/elementos/multiples",
+    search: "funcion/buscar",
+    select: "funcion/crear/select",
 };

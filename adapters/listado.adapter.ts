@@ -1,4 +1,6 @@
-export const ListadoAdapter = (obj: any) => {
+import {Listado} from "../models";
+
+export const ListadoAdapter = (obj: any): Listado => {
     const items = obj.data.items;
     for (const item of items) {
         for (const key in item) {
