@@ -5,6 +5,7 @@ import {
     esES,
 } from '@mui/x-data-grid';
 import {Paper, Box, Toolbar, Typography, createTheme, ThemeProvider} from "@mui/material";
+import {useState} from "react";
 
 const theme = createTheme(
     {
@@ -23,21 +24,18 @@ interface DataTableProps {
     checkboxSelection?: boolean,
     onSelectionModelChange?:any,
     selectionModel?: any,
-    setSelectionModel?: any
+    setSelectionModel?: any,
 }
 
 export function DataTable({title, data, actions, checkboxSelection=true, toolBar=null, onSelectionModelChange=null, selectionModel, setSelectionModel}: DataTableProps) {
     const columns: GridColDef[] = [];
-    let rows: any[] = [];
+   const [tuplas, setTuplas] = useState(data.data.items);
     for (let i = 0; i < data.key.length; i++) {
         if (data.key[i] !== 'id') {
             columns.push(
                 {field: data.key[i], headerName: data.header[i], flex: 1}
             );
         }
-    }
-    if (data.data.items.length > 0) {
-        rows = data.data.items;
     }
     if (actions !== undefined) {
         columns.push(actions)
@@ -63,7 +61,7 @@ export function DataTable({title, data, actions, checkboxSelection=true, toolBar
                             <ThemeProvider theme={theme}>
                                 <DataGrid
                                     disableSelectionOnClick={true}
-                                    rows={rows}
+                                    rows={tuplas}
                                     columns={columns}
                                     pageSize={10}
                                     rowsPerPageOptions={[10, 15, 20, 50, 100]}

@@ -18,7 +18,7 @@ export const patch = async (req: any, res: any, endpoint: string, bodyParams: an
         if (data.status === 200 || data.status === 201) {
             if (data.data.successStatus === true) {
                 msg = {
-                    type: "info",
+                    type: "success",
                     message: `Elemento actualizado correctamente.`,
                 };
             } else {

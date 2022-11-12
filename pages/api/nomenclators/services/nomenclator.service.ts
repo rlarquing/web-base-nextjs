@@ -42,22 +42,18 @@ export const update = async (req: NextApiRequest, res: NextApiResponse, name: st
     return ResponseAdapter(data.obj);
 }
 
-export const deleteNomenclador = async (req: NextApiRequest, res: NextApiResponse,name: string, id: number): Promise<Response | Message> => {
+export const deleteNomenclador = async (req: NextApiRequest, res: NextApiResponse,name: string, id: number): Promise<Message> => {
     let ruta: string = nomenclador.delete.replace('{name}', name);
     ruta = ruta.replace('{id}', `${id}`);
     const data = await remove(req, res, ruta);
-    if (data.msg.type === "error") {
-        return MessageAdapter(data.msg);
-    }
-    return ResponseAdapter(data.obj);
+    return MessageAdapter(data.msg);
+
 }
 
-export const deleteMultiple = async (req: NextApiRequest, res: NextApiResponse, name:string, ids: number[]): Promise<Response | Message> => {
+export const deleteMultiple = async (req: NextApiRequest, res: NextApiResponse, name:string, ids: number[]): Promise<Message> => {
     const ruta: string = nomenclador.delete_many.replace('{name}', name);
     const data = await remove(req, res, ruta, ids);
-    if (data.msg.type === "error") {
-        return MessageAdapter(data.msg);
-    }
-    return ResponseAdapter(data.obj);
+
+    return MessageAdapter(data.msg);
 }
 

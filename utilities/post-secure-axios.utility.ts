@@ -31,7 +31,7 @@ export const post = async (req: any, res: any, endpoint: string, bodyParams?: an
                 if (data.data.successStatus === true) {
                     msg = {
                         statusCode: data.status,
-                        type: "info",
+                        type: "success",
                         message: `Acción realizada correctamente.`,
                     };
                 } else {

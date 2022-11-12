@@ -29,12 +29,12 @@ export const remove = async (req: any, res: any, endpoint: string, payload?: any
         if (data.status === 200 || data.status === 201) {
             if (payload === undefined){
                 msg = {
-                    type: "info",
+                    type: "success",
                     message: `Registro eliminado correctamente.`,
                 };
             }else{
                 msg = {
-                    type: "info",
+                    type: "success",
                     message: `Registros eliminados correctamente.`,
                 };
             }
